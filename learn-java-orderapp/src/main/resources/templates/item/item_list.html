@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>商品マスタ</title>
+</head>
+<body>
+	<h1>商品マスタ</h1>
+	<a href="#" th:href="@{/item/new}">新規登録</a>
+	<table>
+		<tr>
+			<th>商品ID</th>
+			<th>商品名</th>
+			<th>単価</th>
+			<th>削除</th>
+		</tr>
+		<tr th:each="item : ${list}">
+			<td><a th:href="@{/item/edit/{itemId}(itemId=${item.itemId})}" th:text="${item.itemId}">00001</a></td>
+			<td th:text="${item.itemName}">itemName</td>
+			<td th:text="${item.itemPrice}">itemPrice</td>
+			<td><button th:attr="onclick='item_delete(\'' + ${item.itemId} + '\', \'' + ${item.itemName} + '\');'">削除</button></td>
+		</tr>
+	</table>
+
+	<!-- 商品を削除する隠しフォームとJavascript -->
+	<form name="delete_form" method="post" th:action="@{/item/delete}">
+		<input type="hidden" id="item_id" name="itemId">
+	</form>
+	<script type="text/javascript">
+		function item_delete(item_id, item_name) {
+			if(confirm('[' + item_id + '] ' + item_name + ' を削除します。よろしいですか？')) {
+				delete_form.item_id.value = item_id;
+				delete_form.submit();
+				return true;
+			} else {
+				return false;
+			}
+		}
+	</script>
+</body>
+</html>

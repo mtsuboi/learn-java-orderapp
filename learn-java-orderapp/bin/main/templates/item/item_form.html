@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>商品マスタ登録</title>
+</head>
+<body>
+		<h1>商品マスタ登録</h1>
+		<form method="post" th:action="${itemForm.isNewItem}? @{/item/add} : @{/item/update}" th:object="${itemForm}">
+			<label>商品ID：</label>
+			<input type="text" name="itemId" th:value="*{itemId}" /><br/>
+			<div th:if="${#fields.hasErrors('itemId')}" th:errors="*{itemId}"></div>
+			<label>商品名：</label>
+			<input type="text" name="itemName" th:value="*{itemName}" /><br/>
+			<div th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}"></div>
+			<label>単価（円）：</label>
+			<input type="number" name="itemPrice" th:value="*{itemPrice}" /><br/>
+			<div th:if="${#fields.hasErrors('itemPrice')}" th:errors="*{itemPrice}"></div>
+			<input type="submit" value="登録" />
+		</form>
+		<a href="#" th:href="@{/item}">戻る</a>
+</body>
+</html>
