@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,11 +24,7 @@ public class ItemLogicImpl implements ItemLogic {
 	@Override
 	public Optional<Item> findById(String itemId) {
 		// 商品をitem_idで検索する
-		try {
-			return itemDao.findById(itemId);			
-		} catch(EmptyResultDataAccessException e) {
-			throw new ItemLogicException("指定された商品は存在しません。別のユーザーに削除された可能性があります。");
-		}
+		return itemDao.findById(itemId);			
 	}
 	
 	@Override

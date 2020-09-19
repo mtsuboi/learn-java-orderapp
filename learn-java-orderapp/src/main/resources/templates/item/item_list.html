@@ -1,26 +1,51 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>商品マスタ</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>商品マスタ</title>
+
+	<!-- BootstrapのCSSの読み込み -->
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.2/css/bootstrap.min.css}">
+	<!-- 共通CSSの読み込み -->
+	<link rel="stylesheet" th:href="@{/css/common.css}">
 </head>
 <body>
-	<h1>商品マスタ</h1>
-	<a href="#" th:href="@{/item/new}">新規登録</a>
-	<table>
-		<tr>
-			<th>商品ID</th>
-			<th>商品名</th>
-			<th>単価</th>
-			<th>削除</th>
-		</tr>
-		<tr th:each="item : ${list}">
-			<td><a th:href="@{/item/edit/{itemId}(itemId=${item.itemId})}" th:text="${item.itemId}">00001</a></td>
-			<td th:text="${item.itemName}">itemName</td>
-			<td th:text="${item.itemPrice}">itemPrice</td>
-			<td><button th:attr="onclick='item_delete(\'' + ${item.itemId} + '\', \'' + ${item.itemName} + '\');'">削除</button></td>
-		</tr>
-	</table>
+
+	<!-- ナビゲーションバー -->
+	<nav th:replace="common/navbar :: navbar"></nav>
+
+	<div class="container">
+		<h1>商品マスタ</h1>
+		<div style="margin: 5px;">
+			<a class="btn btn-primary" href="#" th:href="@{/item/new}" role="button">
+				<svg th:replace="common/icon :: plus-circle"></svg>
+				<span style="vertical-align: middle;">新規登録</span>
+			</a>
+		</div>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>商品ID</th>
+					<th>商品名</th>
+					<th>単価</th>
+					<th>	<svg th:replace="common/icon :: trash"></svg></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="item : ${list}">
+					<td><a th:href="@{/item/edit/{itemId}(itemId=${item.itemId})}" th:text="${item.itemId}">00001</a></td>
+					<td th:text="${item.itemName}">itemName</td>
+					<td th:text="${#numbers.formatInteger(item.itemPrice, 1,'COMMA')}">itemPrice</td>
+					<td>
+						<a class="trash"  th:attr="onclick='item_delete(\'' + ${item.itemId} + '\', \'' + ${item.itemName} + '\');'">
+							<svg th:replace="common/icon :: trash"></svg>
+						</a>					
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
 	<!-- 商品を削除する隠しフォームとJavascript -->
 	<form name="delete_form" method="post" th:action="@{/item/delete}">
@@ -37,5 +62,9 @@
 			}
 		}
 	</script>
+	
+	<!-- jQueryとBootstrapの読み込み -->
+	<script th:src="@{/webjars/jquery/3.5.1/jquery.slim.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.5.2/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

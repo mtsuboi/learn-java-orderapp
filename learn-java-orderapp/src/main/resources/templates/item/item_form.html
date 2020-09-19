@@ -1,23 +1,46 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>商品マスタ登録</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>商品マスタ登録</title>
+
+	<!-- BootstrapのCSSの読み込み -->
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.2/css/bootstrap.min.css}">
+	<!-- 共通CSSの読み込み -->
+	<link rel="stylesheet" th:href="@{/css/common.css}">
 </head>
 <body>
+
+	<!-- ナビゲーションバー -->
+	<nav th:replace="common/navbar :: navbar"></nav>
+
+	<div class="container">
 		<h1>商品マスタ登録</h1>
-		<form method="post" th:action="${itemForm.isNewItem}? @{/item/add} : @{/item/update}" th:object="${itemForm}">
-			<label>商品ID：</label>
-			<input type="text" name="itemId" th:value="*{itemId}" /><br/>
-			<div th:if="${#fields.hasErrors('itemId')}" th:errors="*{itemId}"></div>
-			<label>商品名：</label>
-			<input type="text" name="itemName" th:value="*{itemName}" /><br/>
-			<div th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}"></div>
-			<label>単価（円）：</label>
-			<input type="number" name="itemPrice" th:value="*{itemPrice}" /><br/>
-			<div th:if="${#fields.hasErrors('itemPrice')}" th:errors="*{itemPrice}"></div>
-			<input type="submit" value="登録" />
+		<form method="post" th:action="@{/item/save}" th:object="${itemForm}">
+			<div class="form-group">
+				<label>商品ID：</label>
+				<input type="text" name="itemId" th:value="*{itemId}" /><br/>
+				<div class="error-message" th:if="${#fields.hasErrors('itemId')}" th:errors="*{itemId}"></div>
+			</div>
+			<div class="form-group">
+				<label>商品名：</label>
+				<input type="text" name="itemName" th:value="*{itemName}" /><br/>
+				<div class="error-message" th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}"></div>
+			</div>
+			<div class="form-group">
+				<label>単価（円）：</label>
+				<input type="number" name="itemPrice" th:value="*{itemPrice}" /><br/>
+				<div class="error-message" th:if="${#fields.hasErrors('itemPrice')}" th:errors="*{itemPrice}"></div>
+			</div>
+			<input type="hidden" name="newItem" th:value="*{newItem}" />
+			<button type="submit" class="btn btn-primary">登録</button>
+			<a type="button" class="btn btn-secondary" href="#" th:href="@{/item}">戻る</a>
 		</form>
-		<a href="#" th:href="@{/item}">戻る</a>
+	</div>
+	
+	<!-- jQueryとBootstrapの読み込み -->
+	<script th:src="@{/webjars/jquery/3.5.1/jquery.slim.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.5.2/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

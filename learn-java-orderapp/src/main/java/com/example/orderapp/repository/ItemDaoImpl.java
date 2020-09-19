@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -32,7 +33,11 @@ public class ItemDaoImpl implements ItemDao {
 		// 商品をitem_idで検索する
 		String sql = "SELECT item_id, item_name, item_price FROM items WHERE item_id = :itemId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("itemId", itemId);
-		return  Optional.ofNullable(jdbcTemplate.queryForObject(sql, param,  new BeanPropertyRowMapper<Item>(Item.class)));
+		try {
+			return Optional.of(jdbcTemplate.queryForObject(sql, param,  new BeanPropertyRowMapper<Item>(Item.class)));
+		} catch(EmptyResultDataAccessException e) {
+			return Optional.empty();
+		}
 	}
 
 	@Override

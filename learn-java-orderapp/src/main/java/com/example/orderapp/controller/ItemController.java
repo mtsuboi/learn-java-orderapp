@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,21 +43,6 @@ public class ItemController {
 		return "item/item_form";
 	}
 
-	@PostMapping("/add")
-	public String add(@Valid @ModelAttribute ItemForm itemForm, BindingResult result, Model model) {
-		// 登録処理
-		// ItemFormのデータをItemに格納
-		Item item = makeItem(itemForm);
-		if(!result.hasErrors()) {
-			// エラーが無ければ登録してリストにリダイレクト
-			itemLogic.add(item);
-			return "redirect:/item";
-		} else {
-			model.addAttribute("itemForm", itemForm);
-			return "/item/item_form";
-		}
-	}
-	
 	@GetMapping("/edit/{itemId}")
 	public String editForm(ItemForm itemForm, @PathVariable String itemId, Model model) {
 		// 編集フォーム
@@ -64,20 +50,36 @@ public class ItemController {
 		Optional<Item> optItem = itemLogic.findById(itemId);
 		Optional<ItemForm> optItemForm = optItem.map(t -> makeItemForm(t));		
 		if(optItem.isPresent()) {
+			// 該当商品が検索できたらフォームを表示
 			itemForm = optItemForm.get();
+			itemForm.setNewItem(false);
+			model.addAttribute("itemForm", itemForm);
+			return "item/item_form";
+		} else {
+			// 該当商品が検索できなかった場合エラーページへ
+			model.addAttribute("message", "指定された商品は存在しません。別のユーザーに削除された可能性があります。");
+			return "error";
 		}
-		model.addAttribute("itemForm", itemForm);
-		return "item/item_form";
 	}
 
-	@PostMapping("/update")
+	@PostMapping("/save")
 	public String update(@Valid @ModelAttribute ItemForm itemForm, BindingResult result, Model model) {
 		// 更新処理
-		// ItemFormのデータをItemに格納
-		Item item = makeItem(itemForm);
 		if(!result.hasErrors()) {
-			// エラーが無ければ更新してリストにリダイレクト
-			itemLogic.update(item);
+			// エラーが無ければ登録または更新してリストにリダイレクト
+			Item item = makeItem(itemForm);
+			if(itemForm.isNewItem()) {
+				try {
+					itemLogic.add(item);
+				} catch (DuplicateKeyException e) {
+					// キー重複の場合はエラーをセットしてフォームを表示
+					result.rejectValue("itemId", "", "既に登録済みの商品IDです。");
+					model.addAttribute("itemForm", itemForm);
+					return "/item/item_form";
+				}
+			} else {
+				itemLogic.update(item);				
+			}
 			return "redirect:/item";
 		} else {
 			model.addAttribute("itemForm", itemForm);
@@ -98,7 +100,7 @@ public class ItemController {
 		Item item = new Item();
 		item.setItemId(itemForm.getItemId());
 		item.setItemName(itemForm.getItemName());
-		item.setItemPrice(itemForm.getItemPrice());
+		item.setItemPrice(itemForm.getItemPrice().intValue());
 		
 		return item;
 	}

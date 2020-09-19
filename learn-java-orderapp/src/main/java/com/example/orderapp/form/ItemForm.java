@@ -15,9 +15,9 @@ public class ItemForm {
 	
 	@NotNull(message = "単価は必須です。")
 	@Min(0)
-	private int itemPrice;
+	private Integer itemPrice;
 	
-	public boolean isNewItem;
+	private Boolean isNewItem;
 
 	public ItemForm() {}
 
@@ -44,19 +44,19 @@ public class ItemForm {
 		this.itemName = itemName;
 	}
 
-	public int getItemPrice() {
+	public Integer getItemPrice() {
 		return itemPrice;
 	}
 
-	public void setItemPrice(int itemPrice) {
+	public void setItemPrice(Integer itemPrice) {
 		this.itemPrice = itemPrice;
 	}
 
-	public boolean isNewItem() {
+	public Boolean isNewItem() {
 		return isNewItem;
 	}
 
-	public void setNewItem(boolean isNewItem) {
+	public void setNewItem(Boolean isNewItem) {
 		this.isNewItem = isNewItem;
 	}
 	
