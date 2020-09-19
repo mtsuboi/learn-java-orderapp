@@ -1,0 +1,29 @@
+body {
+  padding-top: 5rem;
+}
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+.trash {
+	color: gray !important;
+}
+.trash:hover {
+	color: red !important;
+}
+
+.error-message {
+	color: red;
+}
+
+.alt-table-responsive {
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    -webkit-overflow-scrolling: touch;
+}
+
+#item_search_result .selected {
+	background-color: skyblue !important;
+}

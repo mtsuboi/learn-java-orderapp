@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>受注管理システム</title>
+
+	<!-- BootstrapのCSSの読み込み -->
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.2/css/bootstrap.min.css}">
+	<!-- 共通CSSの読み込み -->
+	<link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+<body>
+
+	<!-- ナビゲーションバー -->
+	<nav th:replace="common/navbar :: navbar"></nav>
+
+	<div class="container">
+		<div class="starter-template">
+			<h1>受注管理システム</h1>
+			<p>
+				坪井がJavaとSpringBootの学習をするために作成した、受注管理システムです。<br>商品マスタのメンテと受注登録ができます。
+			</p>
+		</div>
+	</div>
+	
+	<!-- jQueryとBootstrapの読み込み -->
+	<script th:src="@{/webjars/jquery/3.5.1/jquery.slim.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.5.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
