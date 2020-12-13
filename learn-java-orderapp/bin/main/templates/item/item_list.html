@@ -17,11 +17,26 @@
 
 	<div class="container">
 		<h1>商品マスタ</h1>
-		<div style="margin: 5px;">
-			<a class="btn btn-primary" href="#" th:href="@{/item/new}" role="button">
-				<svg th:replace="common/icon :: plus-circle"></svg>
-				<span style="vertical-align: middle;">新規登録</span>
-			</a>
+		<div class="row">
+			<div class="col-xs-6 col-sm-4">
+				<div style="margin: 5px;">
+					<a class="btn btn-primary" href="#" th:href="@{/item/new}" role="button">
+						<svg th:replace="common/icon :: plus-circle"></svg>
+						<span style="vertical-align: middle;">新規登録</span>
+					</a>
+				</div>
+			</div>
+			<div class="col-xs-6 col-sm-8"  style="margin-top: 10px;">
+				<form name="search_form" method="get" th:action="@{/item}">
+					<div class="form-inline">
+						<input type="hidden" id="page" name="page" value="0" />
+						<label for="item_search">商品名検索:　</label>
+						<input type="text" class="form-control" id="item_search" name="itemSearch" th:value="*{itemSearch}" />
+						<button type="submit" class="btn btn-primary" style="margin-left: 10px;"><svg th:replace="common/icon :: search"></svg>検索</button>
+						<button type="submit" class="btn btn-secondary" onclick="item_search.value='';" style="margin-left: 10px;">クリア</button>
+					</div>
+				</form>
+			</div>
 		</div>
 		<table class="table table-striped">
 			<thead>
@@ -33,18 +48,22 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="item : ${list}">
-					<td><a th:href="@{/item/edit/{itemId}(itemId=${item.itemId})}" th:text="${item.itemId}">00001</a></td>
-					<td th:text="${item.itemName}">itemName</td>
-					<td th:text="${#numbers.formatInteger(item.itemPrice, 1,'COMMA')}">itemPrice</td>
+				<tr th:each="item : ${page}" th:object="${item}">
+					<td><a th:href="@{/item/edit/{itemId}(itemId=*{itemId})}" th:text="*{itemId}">00001</a></td>
+					<td th:text="*{itemName}">itemName</td>
+					<td th:text="|*{#numbers.formatInteger(itemPrice, 1,'COMMA')}円|" style="text-align: right;">itemPrice</td>
 					<td>
-						<a class="trash"  th:attr="onclick='item_delete(\'' + ${item.itemId} + '\', \'' + ${item.itemName} + '\');'">
+						<a class="trash"  th:attr="onclick='item_delete(\'' + *{itemId} + '\', \'' + *{itemName} + '\');'">
 							<svg th:replace="common/icon :: trash"></svg>
 						</a>					
 					</td>
 				</tr>
 			</tbody>
 		</table>
+
+	    <!--ページネーション -->
+		<div th:replace="common/pagination :: pagination(@{/item(itemSearch=*{itemSearch})},${page})"></div>
+
 	</div>
 
 	<!-- 商品を削除する隠しフォームとJavascript -->

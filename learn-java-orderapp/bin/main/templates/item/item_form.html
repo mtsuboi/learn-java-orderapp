@@ -15,29 +15,29 @@
 	<!-- ナビゲーションバー -->
 	<nav th:replace="common/navbar :: navbar"></nav>
 
-	<div class="container">
+	<main role="main" class="container">
 		<h1>商品マスタ登録</h1>
 		<form method="post" th:action="@{/item/save}" th:object="${itemForm}">
 			<div class="form-group">
 				<label>商品ID：</label>
-				<input type="text" name="itemId" th:value="*{itemId}" /><br/>
-				<div class="error-message" th:if="${#fields.hasErrors('itemId')}" th:errors="*{itemId}"></div>
+				<input type="text" class="form-control" name="itemId" th:value="*{itemId}" />
+				<div class="text-danger" th:if="${#fields.hasErrors('itemId')}" th:errors="*{itemId}"></div>
 			</div>
 			<div class="form-group">
 				<label>商品名：</label>
-				<input type="text" name="itemName" th:value="*{itemName}" /><br/>
-				<div class="error-message" th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}"></div>
+				<input type="text" class="form-control" name="itemName" th:value="*{itemName}" />
+				<div class="text-danger" th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}"></div>
 			</div>
 			<div class="form-group">
 				<label>単価（円）：</label>
-				<input type="number" name="itemPrice" th:value="*{itemPrice}" /><br/>
-				<div class="error-message" th:if="${#fields.hasErrors('itemPrice')}" th:errors="*{itemPrice}"></div>
+				<input type="number" class="form-control" name="itemPrice" th:value="*{itemPrice}" />
+				<div class="text-danger" th:if="${#fields.hasErrors('itemPrice')}" th:errors="*{itemPrice}"></div>
 			</div>
 			<input type="hidden" name="newItem" th:value="*{newItem}" />
 			<button type="submit" class="btn btn-primary">登録</button>
 			<a type="button" class="btn btn-secondary" href="#" th:href="@{/item}">戻る</a>
 		</form>
-	</div>
+	</main>
 	
 	<!-- jQueryとBootstrapの読み込み -->
 	<script th:src="@{/webjars/jquery/3.5.1/jquery.slim.min.js}"></script>

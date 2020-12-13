@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Icon</title>
+</head>
+<body>
+
+	<!-- ページネーション -->
+	<div th:fragment="pagination (url,page)" th:remove="tag">
+	
+		<div class="d-inline-flex"
+			th:if="${page != null and page.getContent().size() > 0}"
+			th:with="s = ${(page.number + 3 > page.totalPages - 1) ? (page.totalPages - 1 - 6) : (page.number - 3)}, disabledHref = 'javascript:void(0)'">
+		
+			<ul class="pagination">
+				<li th:class="|page-item ${page.first ? 'disabled' : ''}|">
+					<a class="page-link" th:href="${page.first} ? ${disabledHref} : |${url}&page=0|">
+						<span>&lt;&lt;</span>
+					</a>
+				</li>
+
+				<li th:class="|page-item ${page.first ? 'disabled' : ''}|">
+					<a class="page-link" th:href="${page.first} ? ${disabledHref} : |${url}&page=${page.number - 1}|">
+						<span>&lt;</span>
+					</a>
+				</li>
+
+				<li th:each='i : ${#numbers.sequence((s < 0 ? 0 : s), ((s < 0 ? 0 : s) + 6) > (page.totalPages - 1) ? (page.totalPages - 1) : ((s < 0 ? 0 : s) + 6))}'
+					th:class="|page-item ${(page.number == i) ? 'active' : ''}|">
+					<a class="page-link" th:href="|${url}&page=${i}|">
+						<span th:text='${i + 1}'>1</span>
+					</a>
+				</li>
+
+				<li th:class="|page-item ${page.last ? 'disabled' : ''}|">
+					<a class="page-link" th:href="${page.last} ? ${disabledHref} : |${url}&page=${page.number + 1}|">
+						<span>&gt;</span>
+					</a>
+				</li>
+
+				<li th:class="|page-item ${page.last ? 'disabled' : ''}|">
+					<a class="page-link" th:href="${page.last} ? ${disabledHref} : |${url}&page=${page.totalPages - 1}|">
+						<span>&gt;&gt;</span>
+					</a>
+				</li>
+			</ul>
+			
+			<div th:text="|${page.totalElements} 件|" style="margin: 5px;" ></div>
+ 			<div th:if="${page.totalElements} != 0" th:text="|${page.number + 1} / ${page.totalPages} ページ|" style="margin: 5px;" ></div>
+		</div>
+	
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>ユーザーマスタ登録</title>
+
+	<!-- BootstrapのCSSの読み込み -->
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.2/css/bootstrap.min.css}">
+	<!-- 共通CSSの読み込み -->
+	<link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+<body>
+
+	<!-- ナビゲーションバー -->
+	<nav th:replace="common/navbar :: navbar"></nav>
+
+	<main role="main" class="container">
+		<h1>ユーザーマスタ登録</h1>
+		<form method="post" th:action="@{/user/save}" th:object="${userForm}">
+			<div class="form-group">
+				<label>ユーザーID：</label>
+				<input type="text" class="form-control" name="userId" th:value="*{userId}" />
+				<div class="text-danger" th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"></div>
+			</div>
+			<div class="form-group">
+				<label>ユーザー名：</label>
+				<input type="text" class="form-control" name="userName" th:value="*{userName}" />
+				<div class="text-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></div>
+			</div>
+			<div class="form-group">
+				<label>パスワード：</label>
+				<input type="text" class="form-control" name="password" th:value="*{password}" />
+				<div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+			</div>
+			<div class="form-group">
+				<label>ロール：</label>
+				<select class="form-control" name="role">
+					<option th:each="roleItem : ${roleList}" th:value="${roleItem}" th:selected="${roleItem == userForm.role}" th:text="${roleItem}" >role</option>
+				</select>
+				<div class="text-danger" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></div>
+			</div>
+			<input type="hidden" name="newUser" th:value="*{newUser}" />
+			<button type="submit" class="btn btn-primary">登録</button>
+			<a type="button" class="btn btn-secondary" href="#" th:href="@{/user}">戻る</a>
+		</form>
+	</main>
+	
+	<!-- jQueryとBootstrapの読み込み -->
+	<script th:src="@{/webjars/jquery/3.5.1/jquery.slim.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.5.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

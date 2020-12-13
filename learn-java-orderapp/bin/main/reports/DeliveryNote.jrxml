@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DeliveryNote" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="08465d88-c2b1-4fb9-9497-2da6ff7f78cb">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="PublishDate" class="java.lang.String"/>
+	<parameter name="CustomerName" class="java.lang.String"/>
+	<parameter name="OrderAmount" class="java.lang.Integer"/>
+	<parameter name="OrderId" class="java.lang.String"/>
+	<parameter name="CustomerZipcode" class="java.lang.String"/>
+	<parameter name="CustomerAddress" class="java.lang.String"/>
+	<parameter name="StampImage" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="orderDetailNo" class="java.lang.Integer"/>
+	<field name="orderDetailAmount" class="java.lang.Integer"/>
+	<field name="itemId" class="java.lang.String"/>
+	<field name="itemName" class="java.lang.String"/>
+	<field name="itemPrice" class="java.lang.Integer"/>
+	<field name="orderQuantity" class="java.lang.Integer"/>
+	<variable name="itemPriceDisp" class="java.lang.String">
+		<variableExpression><![CDATA[NumberFormat.getNumberInstance().format($F{itemPrice})]]></variableExpression>
+	</variable>
+	<variable name="orderQuantityDisp" class="java.lang.String">
+		<variableExpression><![CDATA[NumberFormat.getNumberInstance().format($F{orderQuantity})]]></variableExpression>
+	</variable>
+	<variable name="orderDetailAmountDisp" class="java.lang.String">
+		<variableExpression><![CDATA[NumberFormat.getNumberInstance().format($F{orderDetailAmount})]]></variableExpression>
+	</variable>
+	<variable name="OrderAmountDisp" class="java.lang.String">
+		<variableExpression><![CDATA[NumberFormat.getNumberInstance().format($P{OrderAmount})]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="280" splitType="Stretch">
+			<staticText>
+				<reportElement x="420" y="10" width="40" height="10" uuid="02ceadd4-e7c0-425e-80a4-582e1a7429fc"/>
+				<textElement>
+					<font fontName="ipaexg"/>
+				</textElement>
+				<text><![CDATA[発行日]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="130" width="60" height="20" uuid="ddd06e1b-0154-4eca-b1f5-db3d390dc2df"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="ipaexg" size="18"/>
+				</textElement>
+				<text><![CDATA[納品書]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="460" y="10" width="80" height="10" uuid="e91240a7-9fe3-42ae-a1c6-887b96cc0735"/>
+				<textElement>
+					<font fontName="ipaexg"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PublishDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="405" y="130" width="130" height="20" uuid="6ba3769b-2568-4cda-9361-def22e73f819"/>
+				<textElement>
+					<font fontName="ipaexg" size="14"/>
+				</textElement>
+				<text><![CDATA[株式会社 つぼい酒店]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="405" y="150" width="60" height="10" uuid="3fbb4ee9-9707-455a-8621-380510ef11dc"/>
+				<textElement>
+					<font fontName="ipaexg"/>
+				</textElement>
+				<text><![CDATA[〒430-0001]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="405" y="160" width="130" height="10" uuid="033c7f70-874c-4b9e-a0e1-7ed2decf3c60"/>
+				<textElement>
+					<font fontName="ipaexg"/>
+				</textElement>
+				<text><![CDATA[静岡県浜松市中区連尺町]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="405" y="170" width="130" height="10" uuid="01d327d5-4967-4f1d-954a-5bbee0cbfc24"/>
+				<textElement>
+					<font fontName="ipaexg"/>
+				</textElement>
+				<text><![CDATA[1-2-3　浜松ツボイビル1F]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="405" y="180" width="130" height="10" uuid="76059235-e29d-470b-af61-455f4110d255"/>
+				<textElement>
+					<font fontName="ipaexg"/>
+				</textElement>
+				<text><![CDATA[TEL:053-123-4567]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="405" y="190" width="130" height="10" uuid="2a1f6cfc-0560-4949-b1d9-09e388191094"/>
+				<textElement>
+					<font fontName="ipaexg"/>
+				</textElement>
+				<text><![CDATA[FAX:053-123-4568]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="20" y="90" width="180" height="17" uuid="e8f9e110-c0be-45ae-ade0-ca5559011dea"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="ipaexg" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CustomerName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="200" y="90" width="20" height="17" uuid="3a0d65a1-b4d6-4a61-bb02-898d0f13aa8b"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="ipaexg" size="14"/>
+				</textElement>
+				<text><![CDATA[様]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="140" width="71" height="10" uuid="c6dce094-61dc-4e57-b9b8-4f318164846f"/>
+				<textElement>
+					<font fontName="ipaexg"/>
+				</textElement>
+				<text><![CDATA[(兼 出荷指示書)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="240" width="140" height="10" uuid="ad756df5-6567-4223-8e8a-26d295cb7649"/>
+				<textElement>
+					<font fontName="ipaexg"/>
+				</textElement>
+				<text><![CDATA[下記の通り納品いたします。]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="30" width="40" height="10" uuid="94573e2a-c330-42b2-954f-a27ebcdd595b"/>
+				<textElement>
+					<font fontName="ipaexg"/>
+				</textElement>
+				<text><![CDATA[受注ID]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="460" y="30" width="80" height="10" uuid="1a6ec56b-b75d-48b5-a84a-900925ba3a21"/>
+				<textElement>
+					<font fontName="ipaexg"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{OrderId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="50" width="110" height="10" uuid="4831ab83-484d-4df5-b839-6cbfac5da174"/>
+				<textElement>
+					<font fontName="ipaexg"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CustomerZipcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="60" width="200" height="30" uuid="4bc075a4-bee3-44b8-b0c1-455a20aa2423"/>
+				<textElement>
+					<font fontName="ipaexg"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CustomerAddress}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement mode="Transparent" x="440" y="200" width="60" height="60" uuid="6d59cfe1-0b9a-460f-8eae-71b5c7c111e7"/>
+				<imageExpression><![CDATA[$P{StampImage}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="20" y="0" width="30" height="18" uuid="a605fc72-a3e1-4a91-a290-027a7bc1d1af">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box leftPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="ipaexg"/>
+				</textElement>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="0" width="70" height="18" uuid="a50a132c-8d94-48e4-908e-a1b45545d3c0"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="ipaexg"/>
+				</textElement>
+				<text><![CDATA[商品ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="0" width="211" height="18" uuid="4d7e310d-4b6d-40c6-8f55-f05316842821"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="ipaexg"/>
+				</textElement>
+				<text><![CDATA[商品名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="331" y="0" width="69" height="18" uuid="dd7c03ec-16b3-4c4a-84b9-ec88290839fc"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="ipaexg"/>
+				</textElement>
+				<text><![CDATA[単価]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="0" width="60" height="18" uuid="661fc77d-f2d6-43a7-b5b8-950b5c6fba9d"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="ipaexg"/>
+				</textElement>
+				<text><![CDATA[数量]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="0" width="70" height="18" uuid="cf6050f6-cc4a-4202-9923-f23aa81f73bd"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="ipaexg"/>
+				</textElement>
+				<text><![CDATA[金額]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="50" y="0" width="70" height="20" uuid="87c16bed-a7e5-48eb-afc0-eb3ee9bde4e1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f6c56081-a0d4-47c2-bc36-f1972258f03b"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="ipaexg"/>
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{itemId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="0" width="211" height="20" uuid="f3c15a3a-b5bc-4d0f-a839-8882348c3afa">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2b67a0f0-8792-454e-87f2-630f94803d23"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="ipaexg"/>
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{itemName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="0" width="30" height="20" uuid="cd3845d9-c715-4215-89f2-061d528366d3">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="ipaexg"/>
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{orderDetailNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="331" y="0" width="69" height="20" uuid="660ef566-8e0f-415a-8e3d-6beb0a447620">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="ipaexg"/>
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{itemPriceDisp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="60" height="20" uuid="5967d516-c317-4062-ba65-4c31f07c9958">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="ipaexg"/>
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{orderQuantityDisp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="0" width="70" height="20" uuid="3faa0801-c9f3-40c6-9a9a-e2d0108545ed">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="ipaexg"/>
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{orderDetailAmountDisp}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="400" y="0" width="60" height="20" uuid="4473df16-2c89-47b7-b1b7-0f00bc8cbd30"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="ipaexg"/>
+				</textElement>
+				<text><![CDATA[合計]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="460" y="0" width="70" height="20" uuid="5863556b-9ee7-4bc5-8682-1b338c7eda04">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="ipaexg"/>
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{OrderAmountDisp}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

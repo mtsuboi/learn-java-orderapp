@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>ユーザーマスタ</title>
+
+	<!-- BootstrapのCSSの読み込み -->
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.2/css/bootstrap.min.css}">
+	<!-- 共通CSSの読み込み -->
+	<link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+<body>
+
+	<!-- ナビゲーションバー -->
+	<nav th:replace="common/navbar :: navbar"></nav>
+
+	<div class="container">
+		<h1>ユーザーマスタ</h1>
+		<div class="row">
+			<div class="col-xs-6 col-sm-4">
+				<div style="margin: 5px;">
+					<a class="btn btn-primary" href="#" th:href="@{/user/new}" role="button">
+						<svg th:replace="common/icon :: plus-circle"></svg>
+						<span style="vertical-align: middle;">新規登録</span>
+					</a>
+				</div>
+			</div>
+			<div class="col-xs-6 col-sm-8"  style="margin-top: 10px;">
+				<form name="search_form" method="get" th:action="@{/user}">
+					<div class="form-inline">
+						<input type="hidden" id="page" name="page" value="0" />
+						<label for="user_search">ユーザー名検索:　</label>
+						<input type="text" class="form-control" id="user_search" name="userSearch" th:value="*{userSearch}" />
+						<button type="submit" class="btn btn-primary" style="margin-left: 10px;"><svg th:replace="common/icon :: search"></svg>検索</button>
+						<button type="submit" class="btn btn-secondary" onclick="user_search.value='';" style="margin-left: 10px;">クリア</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>ユーザーID</th>
+					<th>ユーザー名</th>
+					<th>ロール</th>
+					<th>	<svg th:replace="common/icon :: trash"></svg></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user : ${page}" th:object="${user}">
+					<td><a th:href="@{/user/edit/{userId}(userId=*{userId})}" th:text="*{userId}">userId</a></td>
+					<td th:text="*{userName}">userName</td>
+					<td th:text="*{role}">role</td>
+					<td>
+						<a class="trash"  th:attr="onclick='user_delete(\'' + *{userId} + '\', \'' + *{userName} + '\');'">
+							<svg th:replace="common/icon :: trash"></svg>
+						</a>					
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	    <!--ページネーション -->
+		<div th:replace="common/pagination :: pagination(@{/user(userSearch=*{userSearch})},${page})"></div>
+
+	</div>
+
+	<!-- ユーザーを削除する隠しフォームとJavascript -->
+	<form name="delete_form" method="post" th:action="@{/user/delete}">
+		<input type="hidden" id="user_id" name="userId">
+	</form>
+	<script type="text/javascript">
+		function user_delete(user_id, user_name) {
+			if(confirm('[' + user_id + '] ' + user_name + ' を削除します。よろしいですか？')) {
+				delete_form.user_id.value = user_id;
+				delete_form.submit();
+				return true;
+			} else {
+				return false;
+			}
+		}
+	</script>
+	
+	<!-- jQueryとBootstrapの読み込み -->
+	<script th:src="@{/webjars/jquery/3.5.1/jquery.slim.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.5.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

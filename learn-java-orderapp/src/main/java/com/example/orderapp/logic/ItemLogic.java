@@ -3,24 +3,33 @@ package com.example.orderapp.logic;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.orderapp.model.Item;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import com.example.orderapp.form.ItemForm;
 
 public interface ItemLogic {
 	// 商品を全件抽出する
-	List<Item> findAll();
+	public List<ItemForm> findAll();
+
+	// 商品を全件抽出する(ページング対応)
+	public Page<ItemForm> findAll(final Pageable pageable);
 
 	// 商品をitem_idで検索する
-	Optional<Item> findById(final String itemId);
+	public Optional<ItemForm> findById(final String itemId);
 
 	// 商品を商品名(部分一致)で検索する
-	List<Item> findByName(final String itemName);
+	public List<ItemForm> findByName(final String itemName);
+
+	// 商品を商品名(部分一致)で検索する(ページング対応)
+	public Page<ItemForm> findByName(final String itemName, final Pageable pageable);
 
 	// 商品を追加する
-	void add(final Item item);
+	public void add(final ItemForm itemForm);
 
 	// 商品更新をする
-	int update(final Item item);
+	public int update(final ItemForm itemForm);
 
 	// 商品を削除する
-	int delete(final String itemId);
+	public int delete(final String itemId);
 }

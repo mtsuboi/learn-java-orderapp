@@ -1,12 +1,14 @@
 package com.example.orderapp.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.orderapp.form.ItemForm;
 import com.example.orderapp.logic.ItemLogic;
-import com.example.orderapp.model.Item;
 
 @Controller
 @RequestMapping("/item")
@@ -28,10 +29,20 @@ public class ItemController {
 	private ItemLogic itemLogic;
 
 	@GetMapping
-	public String list(Model model) {
-		// 商品を全件抽出してlistへ入れる
-		List<Item> list = itemLogic.findAll();
-		model.addAttribute("list", list);
+	public String list(@PageableDefault(page = 0, size = 10) Pageable pageable,
+			@RequestParam(name = "itemSearch", required = false) Optional<String> optItemSearch,
+			Model model) {
+		Page<ItemForm> page = null;
+		String itemSearch = "";
+		if(optItemSearch.isPresent()) {
+			itemSearch = optItemSearch.get();
+			page = itemLogic.findByName(itemSearch, pageable);
+		} else {
+			// 商品を全件抽出
+			page = itemLogic.findAll(pageable);
+		}
+		model.addAttribute("itemSearch", itemSearch);
+		model.addAttribute("page", page);
 		return "item/item_list";
 	}
 	
@@ -47,9 +58,8 @@ public class ItemController {
 	public String editForm(ItemForm itemForm, @PathVariable String itemId, Model model) {
 		// 編集フォーム
 		// 指定された商品を取得
-		Optional<Item> optItem = itemLogic.findById(itemId);
-		Optional<ItemForm> optItemForm = optItem.map(t -> makeItemForm(t));		
-		if(optItem.isPresent()) {
+		Optional<ItemForm> optItemForm = itemLogic.findById(itemId);
+		if(optItemForm.isPresent()) {
 			// 該当商品が検索できたらフォームを表示
 			itemForm = optItemForm.get();
 			itemForm.setNewItem(false);
@@ -67,10 +77,9 @@ public class ItemController {
 		// 更新処理
 		if(!result.hasErrors()) {
 			// エラーが無ければ登録または更新してリストにリダイレクト
-			Item item = makeItem(itemForm);
 			if(itemForm.isNewItem()) {
 				try {
-					itemLogic.add(item);
+					itemLogic.add(itemForm);
 				} catch (DuplicateKeyException e) {
 					// キー重複の場合はエラーをセットしてフォームを表示
 					result.rejectValue("itemId", "", "既に登録済みの商品IDです。");
@@ -78,7 +87,7 @@ public class ItemController {
 					return "/item/item_form";
 				}
 			} else {
-				itemLogic.update(item);				
+				itemLogic.update(itemForm);				
 			}
 			return "redirect:/item";
 		} else {
@@ -94,25 +103,4 @@ public class ItemController {
 	    return "redirect:/item";
 	}
 
-
-	private Item makeItem(ItemForm itemForm) {
-		//ItemFormのデータをItemに入れて返す
-		Item item = new Item();
-		item.setItemId(itemForm.getItemId());
-		item.setItemName(itemForm.getItemName());
-		item.setItemPrice(itemForm.getItemPrice().intValue());
-		
-		return item;
-	}
-	
-	private ItemForm makeItemForm(Item item) {
-		//ItemのデータをItemFormに入れて返す
-		ItemForm itemForm = new ItemForm();
-		itemForm.setItemId(item.getItemId());
-		itemForm.setItemName(item.getItemName());
-		itemForm.setItemPrice(item.getItemPrice());
-		itemForm.setNewItem(false);
-		
-		return itemForm;
-	}
 }

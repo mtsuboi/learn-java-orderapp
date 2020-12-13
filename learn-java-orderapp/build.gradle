@@ -10,18 +10,27 @@ sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
+    maven{
+    	url "https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports"
+     	url "http://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/"
+    }
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 	implementation 'org.webjars:bootstrap:4.5.2'
 	implementation 'org.webjars:jquery:3.5.1'
+	implementation 'net.sf.jasperreports:jasperreports:6.4.1'
+	implementation 'com.lowagie:itext:2.1.7'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
@@ -29,4 +38,8 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+bootJar {
+    launchScript()
 }

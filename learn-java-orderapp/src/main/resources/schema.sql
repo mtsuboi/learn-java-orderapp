@@ -1,3 +1,11 @@
+CREATE TABLE IF NOT EXISTS users (
+	user_id VARCHAR(30) NOT NULL,
+	user_name VARCHAR(100) NOT NULL,
+	password VARCHAR(100) NOT NULL,
+	role VARCHAR(30) NOT NULL,
+	PRIMARY KEY (user_id)
+);
+
 CREATE TABLE IF NOT EXISTS items (
 	item_id VARCHAR(5) NOT NULL,
 	item_name VARCHAR(255),
