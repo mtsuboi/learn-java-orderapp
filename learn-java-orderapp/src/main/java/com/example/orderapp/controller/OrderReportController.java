@@ -1,6 +1,5 @@
 package com.example.orderapp.controller;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -110,7 +109,6 @@ public class OrderReportController {
 	private byte[] getReport(List<OrderForm> orderList) {
 		try {
 			// 帳票レイアウトをコンパイル
-			//JasperReport jasperReport = JasperCompileManager.compileReport(resource.getResource("classpath:reports/DeliveryNote.jrxml").getFile().getPath());
 			JasperReport jasperReport = JasperCompileManager.compileReport(resource.getResource("classpath:reports/DeliveryNote.jrxml").getURL().openStream());
 
 			// 帳票を作成
@@ -150,7 +148,6 @@ public class OrderReportController {
 		params.put("CustomerZipcode", "〒" + customerZipcode.substring(0, 3) + "-" + customerZipcode.substring(3));
 		params.put("CustomerAddress", orderForm.getCustomerAddress());
 		try {
-			//InputStream stampImage = new FileInputStream(resource.getResource("classpath:reports/stamp.png").getFile());
 			InputStream stampImage = resource.getResource("classpath:reports/stamp.png").getURL().openStream();
 			params.put("StampImage", stampImage);
 		} catch (IOException e) {
